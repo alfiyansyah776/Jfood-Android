@@ -40,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
                     RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                     queue.add(loginRequest);
                 }
+                Intent mainIntent = new Intent (LoginActivity.this, MainActivity.class);
+                startActivity(mainIntent);
 
             }
             Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -64,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
 
     }
 
