@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Seller> listSeller = new ArrayList<>();
     private ArrayList<Food> foodIdList = new ArrayList<>();
     private HashMap<Seller, ArrayList<Food>> childMapping = new HashMap<>();
-    ExpandableListAdapter listAdapter;
+    MainListAdapter listAdapter;
     ExpandableListView expListView;
 
     private int currentUserId;
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        expListView = (ExpandableListView) findViewById(R.id.lvExp);
         refreshList();
 
 
@@ -71,9 +72,8 @@ public class MainActivity extends AppCompatActivity {
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    expListView = (ExpandableListView) findViewById(R.id.lvExp);
-                    MainListAdapter listAdapter = new MainListAdapter(MainActivity.this, listSeller, childMapping);
-                    expListView.setAdapter(listAdapter);
+
+
                     try {
                         JSONArray jsonResponse = new JSONArray(response);
                         for (int i = 0; i < jsonResponse.length(); i++) {
@@ -104,9 +104,18 @@ public class MainActivity extends AppCompatActivity {
                             Food food1 = new Food(idFood, nameFood, price, category, seller1);
 
                             //input to array list
-                            listSeller.add(seller1);
+                            if (listSeller.isEmpty()){
+                                listSeller.add(seller1);
+                            } else {
+                                for (Seller temp: listSeller) {
+                                    if (temp.getName().equals(seller1.getName())) {
+                                        break;
+                                    } else {
+                                        listSeller.add(seller1);
+                                    }
+                                }
+                            }
                             foodIdList.add(food1);
-                            childMapping.put(listSeller.get(i), foodIdList);
 
                             //input object food and arraylist seller to hashmap
                         for (Seller sel : listSeller) {
@@ -116,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                                     temp.add(food2);
                                 }
                             }
-                            childMapping.put(sel, temp);
+                            childMapping.put(sel, foodIdList);
                         }
 
 
@@ -126,14 +135,13 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog.Builder bulder = new AlertDialog.Builder(MainActivity.this);
                         bulder.setMessage("Main Failed").create().show();
                     }
-
-
-
+                    listAdapter = new MainListAdapter(MainActivity.this, listSeller, childMapping);
+                    expListView.setAdapter(listAdapter);
                 }
             };
-            /*MenuRequest menuRequest = new MenuRequest(responseListener);
+            MenuRequest menuRequest = new MenuRequest(responseListener);
             RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-            queue.add(menuRequest);*/
+            queue.add(menuRequest);
         }
     }
 

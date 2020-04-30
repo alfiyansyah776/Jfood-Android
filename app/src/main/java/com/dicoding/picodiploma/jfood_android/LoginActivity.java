@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
+    private String email;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,32 +34,38 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etEmail.getText().toString().isEmpty() || etPassword.getText().toString().isEmpty()){
+                if (etEmail.getText().toString().isEmpty() || etPassword.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please fill the field", Toast.LENGTH_SHORT).show();
-                }else {
-                    String email = etEmail.getText().toString();
-                    String password = etPassword.getText().toString();
-                    LoginRequest loginRequest = new LoginRequest(email, password, responseListener);
-                    RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-                    queue.add(loginRequest);
+                } else {
+                    email = etEmail.getText().toString();
+                    password = etPassword.getText().toString();
+                    Log.println(Log.DEBUG, null, email);
+                    Log.println(Log.DEBUG, null, password);
+
                 }
-                Intent mainIntent = new Intent (LoginActivity.this, MainActivity.class);
-                startActivity(mainIntent);
+
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject != null) {
+                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                                Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(mainIntent);
+
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                };
+                LoginRequest loginRequest = new LoginRequest(email, password, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+                queue.add(loginRequest);
 
             }
-            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        if (jsonObject != null) {
-                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                        }
-                    } catch (JSONException e) {
-                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
-                    }
-                }
-            };
         });
 
         tvRegister.setOnClickListener(new View.OnClickListener() {
