@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@drawable/back"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical">
+
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/staticId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:paddingBottom="10dp"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="ID Invoice" />
+
+                <TextView
+                    android:id="@+id/invoiceId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:paddingBottom="10dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    tools:text="@string/textview" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/staticCustomerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/white"
+                    android:paddingBottom="10dp"
+                    tools:text="Nama Customer" />
+
+                <TextView
+                    android:id="@+id/customerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/white"
+                    android:ems="10"
+                    android:paddingBottom="10dp"
+                    tools:text="@string/textview" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/staticDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/white"
+                    android:paddingBottom="10dp"
+                    tools:text="Tanggal Pesanan" />
+
+                <TextView
+                    android:id="@+id/invoiceDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/white"
+                    android:ems="10"
+                    android:paddingBottom="10dp"
+                    tools:text="@string/textview" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/staticStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/white"
+                    android:paddingBottom="10dp"
+                    tools:text="Status" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/bold"
+                    android:textColor="@color/white"
+                    android:ems="10"
+                    android:paddingBottom="10dp"
+                    tools:text="@string/textview" />
+            </TableRow>
+
+
+        </TableLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

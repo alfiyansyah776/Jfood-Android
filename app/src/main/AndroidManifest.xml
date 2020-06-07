@@ -13,15 +13,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".PromoListActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".ReviewHistoryActivity"
+            android:parentActivityName=".HistoryInvoiceActivity" />
+        <activity
+            android:name=".HistoryInvoiceActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".CartActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".FoodDetailsActivity" />
+        <activity android:name=".LoginLauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SelesaiPesananActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".BuatPesananActivity"
+            android:parentActivityName=".CartActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

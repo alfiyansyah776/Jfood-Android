@@ -14,12 +14,7 @@ public class MenuRequest extends StringRequest {
     public MenuRequest(Response.Listener<String> listener)
     {
         super(Method.GET, URL, listener, null);
-        //params = new HashMap<>();
-       // params.put("id", Integer.toString(id));
-        //params.put("name", name);
-        //params.put("price", Integer.toString(price));
-        //params.put("category", category);
-        //params.put("seller", java.lang.String.valueOf(seller));
+
     }
 
     @Override

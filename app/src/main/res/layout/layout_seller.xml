@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    android:background="#000000">
+    android:background="#87ceeb">
 
     <TextView
         android:id="@+id/groupHeader"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="?android:attr/expandableListPreferredChildIndicatorLeft"
-        android:textColor="#F9F93D"
-        android:textSize="17dp"/>
+        android:textColor="@color/white"
+        android:fontFamily="@font/regular"
+        android:textSize="20sp"/>
 </LinearLayout>

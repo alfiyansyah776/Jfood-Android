@@ -8,4 +8,27 @@
     <string name="username">Username</string>
     <string name="register">Register</string>
     <string name="pesanan">Pesanan</string>
+    <string name="order">Order</string>
+    <string name="food_name">Food Name</string>
+    <string name="food_category">Food Category</string>
+    <string name="food_price">Food Price</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="via_cash">Via Cash</string>
+    <string name="via_cashless">Via Cashless</string>
+    <string name="promo_code">Promo Code</string>
+    <string name="total_price">Total Price</string>
+    <string name="count">Count</string>
+    <string name="textview">TextView</string>
+    <string name="harga">Harga</string>
+    <string name="id_invoice">ID Invoice:</string>
+    <string name="nama_customer">Nama Customer:</string>
+    <string name="makanan">Makanan:</string>
+    <string name="tanggal_pesan">Tanggal Pesan:</string>
+    <string name="total_biaya">Total Biaya:</string>
+    <string name="status_invoice">Status Invoice:</string>
+    <string name="tipe_invoice">Tipe Invoice:</string>
+    <string name="delivery_fee">Delivery Fee</string>
+    <string name="batal">Batal</string>
+    <string name="selesai">Selesai</string>
+
 </resources>

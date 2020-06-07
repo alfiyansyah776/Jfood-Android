@@ -2,16 +2,17 @@ package com.dicoding.picodiploma.jfood_android;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +24,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Seller> listSeller = new ArrayList<>();
@@ -32,39 +35,64 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListView expListView;
 
     private int currentUserId;
-    SharedPreferences prf;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        Button pesananButton = (Button) findViewById(R.id.pesanan);
+        Button cartButton = (Button) findViewById(R.id.Cart);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        if (getIntent().getExtras() != null) {
+            Intent intent = getIntent();
+            currentUserId = intent.getIntExtra("currentUserId", 0);
+        }
+        SessionManagement sessionManagement = new SessionManagement(MainActivity.this);
+        currentUserId = sessionManagement.getIdinSession();
+
+        //Memanggil fungsi untuk menampilkan expendableList
         refreshList();
 
 
-        /*expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        listSeller.get(groupPosition)
-                                + " : "
-                                + childMapping.get(
-                                listSeller.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
+                Food selected = childMapping.get(listSeller.get(groupPosition)).get(childPosition);
+                Intent buatPesanan = new Intent(MainActivity.this, FoodDetailsActivity.class);
+                SessionManagement sessionManagement = new SessionManagement(MainActivity.this);
+                buatPesanan.putExtra("currentUserId", currentUserId = sessionManagement.getIdinSession());
+                buatPesanan.putExtra("foodId", selected.getId());
+                buatPesanan.putExtra("foodName", selected.getName());
+                buatPesanan.putExtra("foodCategory", selected.getCategory());
+                buatPesanan.putExtra("foodPrice", selected.getPrice());
+                startActivity(buatPesanan);
                 return false;
             }
         });
 
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        listSeller.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });*/
+
+       pesananButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent selesaiPesananIntent = new Intent(MainActivity.this, SelesaiPesananActivity.class);
+               selesaiPesananIntent.putExtra("currentUserId", currentUserId);
+               startActivity(selesaiPesananIntent);
+           }
+       });
+
+       cartButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(MainActivity.this, CartActivity.class);
+               intent.putExtra("currentUserId", currentUserId);
+               startActivity(intent);
+           }
+       });
 
     }
 
@@ -72,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-
-
                     try {
                         JSONArray jsonResponse = new JSONArray(response);
                         for (int i = 0; i < jsonResponse.length(); i++) {
@@ -103,37 +129,35 @@ public class MainActivity extends AppCompatActivity {
                             Seller seller1 = new Seller(id, name, email, phoneNumber, loc);
                             Food food1 = new Food(idFood, nameFood, price, category, seller1);
 
-                            //input to array list
-                            if (listSeller.isEmpty()){
-                                listSeller.add(seller1);
-                            } else {
-                                for (Seller temp: listSeller) {
-                                    if (temp.getName().equals(seller1.getName())) {
-                                        break;
-                                    } else {
-                                        listSeller.add(seller1);
-                                    }
+
+                            boolean tester = true;
+                            for (Seller temp : listSeller){
+                                if(temp.getId() == seller1.getId()){
+                                    tester = false;
                                 }
+                            }
+                            if (tester){
+                                listSeller.add(seller1);
                             }
                             foodIdList.add(food1);
 
                             //input object food and arraylist seller to hashmap
+
                         for (Seller sel : listSeller) {
                             ArrayList<Food> temp = new ArrayList<>();
                             for (Food food2 : foodIdList) {
-                                if (food2.getSeller().getName().equals(sel.getName()) || food2.getSeller().getEmail().equals(sel.getEmail()) || food2.getSeller().getPhoneNumber().equals(sel.getPhoneNumber())){
+                                if (food2.getSeller().getName().equals(sel.getName()) && food2.getSeller().getEmail().equals(sel.getEmail()) && food2.getSeller().getPhoneNumber().equals(sel.getPhoneNumber())){
                                     temp.add(food2);
                                 }
                             }
-                            childMapping.put(sel, foodIdList);
+                            childMapping.put(sel, temp);
                         }
-
 
                         }
 
                     } catch (JSONException e) {
-                        AlertDialog.Builder bulder = new AlertDialog.Builder(MainActivity.this);
-                        bulder.setMessage("Main Failed").create().show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage("Main Failed").create().show();
                     }
                     listAdapter = new MainListAdapter(MainActivity.this, listSeller, childMapping);
                     expListView.setAdapter(listAdapter);
@@ -143,5 +167,56 @@ public class MainActivity extends AppCompatActivity {
             RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
             queue.add(menuRequest);
         }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        setMode(item.getItemId());
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setMode(int itemId) {
+        switch (itemId){
+            case R.id.LogOut :
+                logOut();
+                break;
+            case R.id.History :
+                goToHistoryInvoice();
+                break;
+            case R.id.Promo :
+                goToPromoList();
+                break;
+        }
+
+
+    }
+
+    private void logOut(){
+        SessionManagement sessionManagement = new SessionManagement(MainActivity.this);
+        sessionManagement.removeSession();
+        Intent intent = new Intent(MainActivity.this, LoginLauncherActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToHistoryInvoice (){
+        Intent intent = new Intent(MainActivity.this, HistoryInvoiceActivity.class);
+        intent.putExtra("currentUserId", currentUserId);
+        startActivity(intent);
+    }
+
+    private void goToPromoList (){
+        Intent intent = new Intent(MainActivity.this, PromoListActivity.class);
+        intent.putExtra("currentUserId", currentUserId);
+        startActivity(intent);
+    }
+
+
+
+
+}
 
