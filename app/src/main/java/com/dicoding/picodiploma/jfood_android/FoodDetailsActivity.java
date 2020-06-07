@@ -75,28 +75,28 @@ public class FoodDetailsActivity extends AppCompatActivity {
             foodImage = R.drawable.tempura;
         }else if (foodName.equals("Onigiri")){
             gambarMakanan.setImageDrawable(getDrawable(R.drawable.onigiri));
-            foodImage = R.drawable.error404;
+            foodImage = R.drawable.onigiri;
         }else if (foodName.equals("Tuna Onigiri")) {
             gambarMakanan.setImageDrawable(getDrawable(R.drawable.tunaonigiri1));
-            foodImage = R.drawable.error404;
+            foodImage = R.drawable.tunaonigiri1;
         }else if (foodName.equals("Kare")) {
             gambarMakanan.setImageDrawable(getDrawable(R.drawable.kare));
-            foodImage = R.drawable.error404;
+            foodImage = R.drawable.kare;
         }else if (foodName.equals("Kaarage")) {
             gambarMakanan.setImageDrawable(getDrawable(R.drawable.kaarage1));
-            foodImage = R.drawable.error404;
+            foodImage = R.drawable.kaarage1;
         }else if (foodName.equals("Tonkotsu ramen")) {
             gambarMakanan.setImageDrawable(getDrawable(R.drawable.tonkotsuramen));
-            foodImage = R.drawable.error404;
+            foodImage = R.drawable.tonkotsuramen;
         }else if (foodName.equals("Ebi furai")) {
             gambarMakanan.setImageDrawable(getDrawable(R.drawable.ebifurai));
-            foodImage = R.drawable.error404;
+            foodImage = R.drawable.ebifurai;
         }else if (foodName.equals("Omelette")) {
             gambarMakanan.setImageDrawable(getDrawable(R.drawable.omelette1));
-            foodImage = R.drawable.error404;
+            foodImage = R.drawable.omelette1;
         }else if (foodName.equals("Don")) {
             gambarMakanan.setImageDrawable(getDrawable(R.drawable.don));
-            foodImage = R.drawable.error404;
+            foodImage = R.drawable.don;
         }else{
             gambarMakanan.setImageDrawable(getDrawable(R.drawable.error404));
             foodImage = R.drawable.error404;
